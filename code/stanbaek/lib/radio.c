@@ -57,7 +57,6 @@
 #include "payload.h"
 #include "generic_typedefs.h"
 #include "mac_packet.h"
-#include "lcd.h"
 #include <stdio.h>
 
 
@@ -456,7 +455,7 @@ static void trxSendPacket(void) {
     Payload pld = pqPop(txQueue); 
 
     macTxPacket->payload = pld;
-    macTxPacket->payloadLength = payGetPayloadLength(pld);
+    macTxPacket->payload_length = payGetPayloadLength(pld);
 
     currentState = STATE_BUSY_TX_ARET;
     trxSetSlptr(1);
@@ -466,22 +465,22 @@ static void trxSendPacket(void) {
     trxWriteByte(TRX_CMD_FW);
 
 
-    trxWriteByte(macTxPacket->payloadLength + MAC_HEADER_LENGTH + CRC_LENGTH);
+    trxWriteByte(macTxPacket->payload_length + MAC_HEADER_LENGTH + CRC_LENGTH);
     trxWriteByte(macTxPacket->frame_ctrl.val.byte.LB);
     trxWriteByte(macTxPacket->frame_ctrl.val.byte.HB);
-    //trxWriteByte(macTxPacket->seqNum);
+    //trxWriteByte(macTxPacket->seq_num);
     trxWriteByte(packetSqn++);
-    trxWriteByte(macTxPacket->destPANID.byte.LB);
-    trxWriteByte(macTxPacket->destPANID.byte.HB);
-    trxWriteByte(macTxPacket->destAddr.byte.LB);
-    trxWriteByte(macTxPacket->destAddr.byte.HB);
-    //trxWriteByte(packet.srcPANID.byte.LB);
-    //trxWriteByte(packet.srcPANID.byte.HB);
-    trxWriteByte(macTxPacket->srcAddr.byte.LB);
-    trxWriteByte(macTxPacket->srcAddr.byte.HB);
+    trxWriteByte(macTxPacket->dest_pan_id.byte.LB);
+    trxWriteByte(macTxPacket->dest_pan_id.byte.HB);
+    trxWriteByte(macTxPacket->dest_addr.byte.LB);
+    trxWriteByte(macTxPacket->dest_addr.byte.HB);
+    //trxWriteByte(packet.src_pan_id.byte.LB);
+    //trxWriteByte(packet.src_pan_id.byte.HB);
+    trxWriteByte(macTxPacket->src_addr.byte.LB);
+    trxWriteByte(macTxPacket->src_addr.byte.HB);
 
     payInitIterator(macTxPacket->payload);
-    for (i = 0; i < macTxPacket->payloadLength; i++) {
+    for (i = 0; i < macTxPacket->payload_length; i++) {
         trxWriteByte(payNextElement(macTxPacket->payload));
     }
     SPI_CS = 1; // end SPI
@@ -509,20 +508,20 @@ static void trxReceivePacket(void) {
     trxWriteByte(TRX_CMD_FR);
     
     length = trxReadByte() - MAC_HEADER_LENGTH - CRC_LENGTH;
-    macRxPacket->payloadLength = length;
+    macRxPacket->payload_length = length;
     macRxPacket->frame_ctrl.val.byte.LB = trxReadByte();
     macRxPacket->frame_ctrl.val.byte.HB = trxReadByte();
-    macRxPacket->seqNum = trxReadByte();
-    macRxPacket->destPANID.byte.LB = trxReadByte();
-    macRxPacket->destPANID.byte.HB = trxReadByte();
-    macRxPacket->destAddr.byte.LB = trxReadByte();
-    macRxPacket->destAddr.byte.HB = trxReadByte();
-    if (!macRxPacket->frame_ctrl.bits.panIDComp) {
-        macRxPacket->srcPANID.byte.LB = trxReadByte();
-        macRxPacket->srcPANID.byte.HB = trxReadByte();
+    macRxPacket->seq_num = trxReadByte();
+    macRxPacket->dest_pan_id.byte.LB = trxReadByte();
+    macRxPacket->dest_pan_id.byte.HB = trxReadByte();
+    macRxPacket->dest_addr.byte.LB = trxReadByte();
+    macRxPacket->dest_addr.byte.HB = trxReadByte();
+    if (!macRxPacket->frame_ctrl.bits.pan_id_comp) {
+        macRxPacket->src_pan_id.byte.LB = trxReadByte();
+        macRxPacket->src_pan_id.byte.HB = trxReadByte();
     }
-    macRxPacket->srcAddr.byte.LB = trxReadByte();
-    macRxPacket->srcAddr.byte.HB = trxReadByte();
+    macRxPacket->src_addr.byte.LB = trxReadByte();
+    macRxPacket->src_addr.byte.HB = trxReadByte();
 
 
     pld = payCreateEmpty(length-2);
@@ -552,20 +551,20 @@ MacPacket trxCreateMacPacket(void) {
 
     MacPacket packet = (MacPacket)malloc(sizeof(MacPacketStruct));
 
-    packet->frame_ctrl.bits.packetType = PACKET_TYPE_DATA;
-    packet->frame_ctrl.bits.secEn = 0;
-    packet->frame_ctrl.bits.frmPending = 0;
-    packet->frame_ctrl.bits.ackReq = PACKET_ACK_REQ;
-    packet->frame_ctrl.bits.panIDComp = 1;
+    packet->frame_ctrl.bits.packet_type = PACKET_TYPE_DATA;
+    packet->frame_ctrl.bits.sec_en = 0;
+    packet->frame_ctrl.bits.frm_pending = 0;
+    packet->frame_ctrl.bits.ack_req = PACKET_ACK_REQ;
+    packet->frame_ctrl.bits.pan_id_comp = 1;
     packet->frame_ctrl.bits.reserved = 0;
-    packet->frame_ctrl.bits.destAddrMode = 2;
-    packet->frame_ctrl.bits.frmVersion = 1;
-    packet->frame_ctrl.bits.srcAddrMode = 2;
-    packet->seqNum = 0;
-    packet->destPANID.val = DEFAULT_DEST_PAN_ID;
-    packet->srcPANID.val = DEFAULT_SRC_PAN_ID;
-    packet->destAddr.val = DEFAULT_DEST_ADDR;
-    packet->srcAddr.val = DEFAULT_SRC_ADDR;
+    packet->frame_ctrl.bits.dest_addr_mode = 2;
+    packet->frame_ctrl.bits.frm_version = 1;
+    packet->frame_ctrl.bits.src_addr_mode = 2;
+    packet->seq_num = 0;
+    packet->dest_pan_id.val = DEFAULT_DEST_PAN_ID;
+    packet->src_pan_id.val = DEFAULT_SRC_PAN_ID;
+    packet->dest_addr.val = DEFAULT_DEST_ADDR;
+    packet->src_addr.val = DEFAULT_SRC_ADDR;
 
     return packet;
 
