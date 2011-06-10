@@ -1,0 +1,48 @@
+Partlist exported from /Users/ahoover/Research/PICDevel/boards/Crawler Board/CrawlerBoard_v0.6.sch at 3/25/11 5:42 PM
+
+Part  Value            Device           Package               Description                        
+C1    1uF              CAP0402-CAP      0402-CAP              Capacitor                          
+C2    2.2uF            CAP0402-CAP      0402-CAP              Capacitor                          
+C3    1uF              CAP0402-CAP      0402-CAP              Capacitor                          
+C4    0.1uF            CAP0402-CAP      0402-CAP              Capacitor                          
+C5    0.1uf            CAP0402-CAP      0402-CAP              Capacitor                          
+C6    0.1uF            CAP0402-CAP      0402-CAP              Capacitor                          
+C7    0.1uF            CAP0402-CAP      0402-CAP              Capacitor                          
+C9                     CAP0402-CAP      0402-CAP              Capacitor                          
+C10                    CAP0402-CAP      0402-CAP              Capacitor                          
+C11   0.1uF            CAP0402-CAP      0402-CAP              Capacitor                          
+C12   1uF              CAP0402-CAP      0402-CAP              Capacitor                          
+C13   1uF              CAP0402-CAP      0402-CAP              Capacitor                          
+CONN1 SAMTEC_BKS_119_1 SAMTEC_BKS_119_1 SAMTEC_19P_1MM_SOCKET                                    
+JP1   MPCS6PH          MPCS6PH          MOLEX-PICO_CLASP_S6P  Molex Pico-Clasp Single Row 6 Pos  
+JP2   MPCS6PH          MPCS6PH          MOLEX-PICO_CLASP_S6P  Molex Pico-Clasp Single Row 6 Pos  
+MOT1  MPCS2PH          MPCS2PH          MOLEX-PICO_CLASP_S2P  Molex Pico-Clasp Single Row 2 POS  
+MOT2  MPCS2PH          MPCS2PH          MOLEX-PICO_CLASP_S2P  Molex Pico-Clasp Single Row 2 POS  
+R1                     RESISTOR0402-RES 0402-RES              Resistor                           
+R2                     RESISTOR0402-RES 0402-RES              Resistor                           
+R3                     RESISTOR0402-RES 0402-RES              Resistor                           
+R4                     RESISTOR0402-RES 0402-RES              Resistor                           
+R5    100K             RESISTOR0402-RES 0402-RES              Resistor                           
+R6    100K             RESISTOR0402-RES 0402-RES              Resistor                           
+R7                     RESISTOR0402-RES 0402-RES              Resistor                           
+R8                     RESISTOR0402-RES 0402-RES              Resistor                           
+R9                     RESISTOR0402-RES 0402-RES              Resistor                           
+R10                    RESISTOR0402-RES 0402-RES              Resistor                           
+R11                    RESISTOR0402-RES 0402-RES              Resistor                           
+R12                    RESISTOR0402-RES 0402-RES              Resistor                           
+RECT1 CDBHD120         CDBHD120         4-PIN_TO-269AA                                           
+RECT2 CDBHD120         CDBHD120         4-PIN_TO-269AA                                           
+REG1  ZXCL330H5TA      ZXCL330H5TA      SC-70-5               Zetex ZXCL Series Voltage Regulator
+RN1   1K               2R-NEXB24V       EXB24V                Array Chip Resistor                
+RN2   1K               2R-NEXB24V       EXB24V                Array Chip Resistor                
+RN3   1K               2R-NEXB24V       EXB24V                Array Chip Resistor                
+RN4   100K             2R-NEXB24V       EXB24V                Array Chip Resistor                
+RN5   100K             2R-NEXB24V       EXB24V                Array Chip Resistor                
+RN6   100K             2R-NEXB24V       EXB24V                Array Chip Resistor                
+U2    MCP17529         MCP17529         20-T_VMFP                                                
+U3    PI3B3253         PI3B3253         16-PIN_QSOP                                              
+U4    LMH6643          LMH6643          8-PIN_MSOP                                               
+U5    PI3B3253         PI3B3253         16-PIN_QSOP                                              
+U6    SI1988DHA        SI1988DHA        SC-70-6               2 N-Channel MOSFET                 
+U7    SI1988DHA        SI1988DHA        SC-70-6               2 N-Channel MOSFET                 
+U8    SI1988DHA        SI1988DHA        SC-70-6               2 N-Channel MOSFET                 
