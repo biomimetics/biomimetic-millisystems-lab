@@ -48,17 +48,11 @@
 
 // Abstracting LEDs for easier control of their status
 #if defined(__IMAGEPROC1)
-    //#define OVCAM_PWDN      _RC13
-    //#define OVCAM_VSYNC     _RD8    
-    //#define OVCAM_PIXEL     PORTD
 
     #define LED_1   _LATF0
     #define LED_2   _LATF1
 
 #elif defined(__IMAGEPROC2) || defined(__MIKRO)
-    //#define OVCAM_PWDN      _RC14
-    //#define OVCAM_VSYNC     _RC13
-    //#define OVCAM_PIXEL     PORTD
 
     #define LED_1   _LATB12
     #define LED_2   _LATB13
