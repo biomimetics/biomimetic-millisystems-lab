@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2010, Regents of the University of California
+ * Copyright (c) 2008-2011, Regents of the University of California
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -193,6 +193,11 @@ unsigned char dfmemGetStatus (void);
 // 
 // Returns : manufacturer id
 unsigned char dfmemGetManufacturerID (void);
+
+// Requests dfmem device ID data, returning the memory density.
+//
+// Returns : device density code (5 bits)
+unsigned char dfmemGetChipSize (void);
 
 
 #endif // __DFMEM_H

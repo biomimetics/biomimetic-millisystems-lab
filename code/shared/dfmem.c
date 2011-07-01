@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2010, Regents of the University of California
+ * Copyright (c) 2008-2011, Regents of the University of California
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,6 +38,8 @@
  *                              2010-7-19   Blocking read/writes tested
  *  Stanley S. Baek             2010-8-30   Added buffer read/writes and sector
  *                                          erase for improving writing speeds.
+ *  Andrew Pullin               2011-6-7    Added ability to query for chip
+ *  w/Fernando L. Garcia Bermudez           size and flags to handle them.
  *
  * Notes:
  *  - Uses an SPI port for communicating with the memory chip.
@@ -61,6 +63,15 @@
     #define SPI_STAT        SPI2STAT
     #define SPI_STATbits    SPI2STATbits
 
+#endif
+
+// Handle different chip sizes
+#if (defined(__DFMEM_8MBIT))
+    #define BYTE_ADDRESS_BITS   9
+#elif (defined(__DFMEM_16MBIT) || defined(__DFMEM_32MBIT))
+    #define BYTE_ADDRESS_BITS   10
+#else
+    #error "You need to specify the size of your memory chip by defining one of the following flags: __DFMEM_8MBIT, __DFMEM_16MBIT, or __DFMEM_32MBIT."
 #endif
 
 // Commands
@@ -128,8 +139,8 @@ void dfmemWrite (unsigned char *data, unsigned int length, unsigned int page,
     }
     
     // Restructure page/byte addressing
-    // 1 don't care bit + 13 page address bits + 10 byte address bits
-    MemAddr.address = (((unsigned long)page) << 10) + byte;
+    // 1 don't care bit + 13 page address bits + byte address bits
+    MemAddr.address = (((unsigned long)page) << BYTE_ADDRESS_BITS) + byte;
 
 
     // Write data to memory
@@ -158,7 +169,7 @@ void dfmemWriteBuffer (unsigned char *data, unsigned int length,
     }
     
     // Restructure page/byte addressing
-    // 14 don't care bit + 10 byte address bits
+    // 14 don't care bit + byte address bits
     MemAddr.address = (unsigned long)byte;
     
     // Write data to memory
@@ -188,8 +199,8 @@ void dfmemWriteBuffer2MemoryNoErase (unsigned int page, unsigned char buffer)
     }
     
     // Restructure page/byte addressing
-    // 1 don't care bit + 13 page address bits + 10 don't care
-    MemAddr.address = ((unsigned long)page) << 10;
+    // 1 don't care bit + 13 page address bits + don't care bits
+    MemAddr.address = ((unsigned long)page) << BYTE_ADDRESS_BITS;
    
     // Write data to memory
     dfmemSelectChip();
@@ -231,8 +242,8 @@ void dfmemRead (unsigned int page, unsigned int byte, unsigned int length,
     while(!dfmemIsReady());
 
     // Restructure page/byte addressing
-    // 1 don't care bit + 13 page address bits + 10 byte address bits
-    MemAddr.address = (((unsigned long)page) << 10) + byte;
+    // 1 don't care bit + 13 page address bits + byte address bits
+    MemAddr.address = (((unsigned long)page) << BYTE_ADDRESS_BITS) + byte;
    
     // Read data from memory
     dfmemSelectChip();
@@ -265,8 +276,8 @@ void dfmemReadPage2Buffer (unsigned int page, unsigned char buffer)
         command = READ_PAGE_TO_BUFFER_2;
     }
 
-    // 1 don't care bit + 13 page address bits + 10 don't care bits
-    MemAddr.address = ((unsigned long)page) << 10;
+    // 1 don't care bit + 13 page address bits + don't care bits
+    MemAddr.address = ((unsigned long)page) << BYTE_ADDRESS_BITS;
     
     // Write data to memory
     dfmemSelectChip();
@@ -284,7 +295,7 @@ void dfmemErasePage (unsigned int page)
     while(!dfmemIsReady());
 
     // Restructure page/byte addressing
-    MemAddr.address = ((unsigned long)page) << 10;
+    MemAddr.address = ((unsigned long)page) << BYTE_ADDRESS_BITS;
     
     // Write data to memory
     dfmemSelectChip();
@@ -302,7 +313,7 @@ void dfmemEraseBlock (unsigned int page)
     while(!dfmemIsReady());
 
     // Restructure page/byte addressing
-    MemAddr.address = ((unsigned long)page) << 10;
+    MemAddr.address = ((unsigned long)page) << BYTE_ADDRESS_BITS;
     
     // Write data to memory
     dfmemSelectChip();
@@ -320,7 +331,7 @@ void dfmemEraseSector (unsigned int page)
     while(!dfmemIsReady());
 
     // Restructure page/byte addressing
-    MemAddr.address = ((unsigned long)page) << 10;
+    MemAddr.address = ((unsigned long)page) << BYTE_ADDRESS_BITS;
     
     // Write data to memory
     dfmemSelectChip();
@@ -377,6 +388,24 @@ unsigned char dfmemGetManufacturerID (void)
     
     dfmemWriteByte(0x9F);
     byte = dfmemReadByte();
+
+    dfmemDeselectChip();
+
+    return byte;
+}
+
+// The manufacturer and device id command (0x9F) returns 4 bytes normally
+// (including info on id, family, density, etc.), but this functions returns
+// only the 5 bits pertaining to the memory density.
+unsigned char dfmemGetChipSize (void)
+{   
+    unsigned char byte;
+    
+    dfmemSelectChip();
+    
+    dfmemWriteByte(0x9F);
+	byte = dfmemReadByte(); // Manufacturer ID, not needed
+	byte = dfmemReadByte() & 0b00011111;
 
     dfmemDeselectChip();
 
