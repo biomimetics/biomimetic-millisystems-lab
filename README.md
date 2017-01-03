@@ -1,8 +1,8 @@
 All code licensed under the 3-clause modified-BSD license, unless
 otherwise noted.
 
-All boards licensed under the `Creative Commons Attribution 3.0
-Unported License <http://creativecommons.org/licenses/by/3.0/>`_.
+All boards licensed under the [Creative Commons Attribution 3.0
+Unported License](http://creativecommons.org/licenses/by/3.0/).
 
 Deprecated Biomimetic Millisystems Lab's Google Code SVN
 ========================================================
