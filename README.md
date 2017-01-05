@@ -1,4 +1,4 @@
-__This repository is not supported. It was migrated from the now defunct
+__This repository is DEPRECATED. It was migrated from the now defunct
 Google Code hosting solely for historical reference. Please consider using
 [imageproc-lib](https://github.com/biomimetics/imageproc-lib) or
 [imageproc_pcb](https://github.com/biomimetics/imageproc_pcb) instead.__
