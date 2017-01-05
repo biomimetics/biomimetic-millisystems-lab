@@ -3,6 +3,8 @@ Google Code hosting solely for historical reference. Please consider using
 [imageproc-lib](https://github.com/biomimetics/imageproc-lib) or
 [imageproc_pcb](https://github.com/biomimetics/imageproc_pcb) instead.__
 
+---
+
 All code licensed under the 3-clause modified-BSD license, unless otherwise
 noted, and all boards licensed under the [Creative Commons Attribution 3.0
 Unported License](http://creativecommons.org/licenses/by/3.0/).
