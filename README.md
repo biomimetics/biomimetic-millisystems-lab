@@ -1,17 +1,22 @@
-All code licensed under the 3-clause modified-BSD license, unless
-otherwise noted.
+__This repository is no longer supported. It was migrated from the now defunct
+Google Code hosting solely for historical reference. Please consider using
+[imageproc-lib](https://github.com/biomimetics/imageproc-lib) or
+[imageproc_pcb](https://github.com/biomimetics/imageproc_pcb) instead.__
+
+---
 
 All boards licensed under the [Creative Commons Attribution 3.0
 Unported License](http://creativecommons.org/licenses/by/3.0/).
+All code licensed under the 3-clause modified-BSD license, unless
+otherwise noted.
 
-Deprecated Biomimetic Millisystems Lab's Google Code SVN
-========================================================
+Embedded hardware and software development at the Biomimetic Millisystems Lab
+=============================================================================
 
 Description
 -----------
-Migrated from the now defunct Google Code hosting for historical reference.
-Please use and contribute to ported repositories instead
-(e.g. biomimetics/imageproc-lib and biomimetics/imageproc_pcb).
+Ongoing development of a series of embedded sensing and actuating platforms
+for the autonomous control of milli-robots.
 
 Citing the source
 -----------------
