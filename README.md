@@ -1,8 +1,7 @@
-This repository is no longer supported. It was migrated from the now defunct
+__This repository is not supported. It was migrated from the now defunct
 Google Code hosting solely for historical reference. Please consider using
 [imageproc-lib](https://github.com/biomimetics/imageproc-lib) or
-[imageproc_pcb](https://github.com/biomimetics/imageproc_pcb) instead.
-----------------------------------------------------------------------------
+[imageproc_pcb](https://github.com/biomimetics/imageproc_pcb) instead.__
 
 All code licensed under the 3-clause modified-BSD license, unless otherwise
 noted, and all boards licensed under the [Creative Commons Attribution 3.0
